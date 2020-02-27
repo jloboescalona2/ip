@@ -137,10 +137,12 @@ define(function(require) {
   ip.cidr = function(cidrString) {
     var cidrParts = cidrString.split('/');
     var addr = cidrParts[0];
-    if (cidrParts.length !== 2)
-      throw new Error('invalid CIDR subnet: ' + addr);
-    var mask = ip.fromPrefixLen(parseInt(cidrParts[1], 10));
-    return ip.mask(addr, mask);
+    if (cidrParts.length === 2){
+      var mask = ip.fromPrefixLen(parseInt(cidrParts[1], 10));
+      return ip.mask(addr, mask);
+    }else{
+      console.log('invalid CIDR subnet: ' + addr);
+    }
   };
   ip.subnet = function(addr, mask) {
     var networkAddress = ip.toLong(ip.mask(addr, mask));
